@@ -25,6 +25,8 @@ function gpx_menus(){
 }
 add_action('init','gpx_menus');
 
+add_image_size( 'Featured Advertiser Banner', 300, 150 );
+
 
 // register and enqueue styles
 function gpx_register_styles(){

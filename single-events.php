@@ -4,26 +4,41 @@
 ?>
 
 <div id="single">
-<section class="hero" style="background-image:url(images/beach.jpeg)">
+<section class="hero" style="background-image:url('<?php the_post_thumbnail_url() ?>')">
 
-<div class="hero-inner">
-  <div class="container">
-          <div class="title"><h2><?php the_title() ?></h2></div>
-        <div class="details"><i class="far fa-calendar"></i>&nbsp; August 12-14 &nbsp;&nbsp;&nbsp; <i class="fas fa-map-marker-alt"></i>&nbsp;Charlotte Convention Center</div>
+  <div class="hero-inner">
+    <div class="container">
+      <div class="title"><h2><?php the_title() ?></h2></div>
+      <div class="details">
+        <i class="far fa-calendar"></i>&nbsp; August 12-14 &nbsp;&nbsp;&nbsp; 
+        
+        <?php 
+        $address = get_field('address');
+        if( $address ): 
+            $address_url = $address['url'];
+            $address_title = $address['title'];
+            $address_target = $address['target'] ? $address['target'] : '_self';
+            ?>
+            <i class="fas fa-map-marker-alt"></i>&nbsp;
+            <a href="<?php echo esc_url( $address_url ); ?>" target="<?php echo esc_attr( $address_target ); ?>"><?php echo esc_html( $address_title ); ?></a>
+        <?php endif; ?>
 
-
-</div>
-
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="content">
   <div class="container">
     <div class="intro">
-      <img src="images/beach.jpeg" alt="">
+      <?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large', array( 'class' => 'article-hero' ) ); } ?>
       <article>
 
         <!-- post editor content -->
         <?php
+
+
+
           if( have_posts() ){
             while( have_posts() ){
               the_post();
@@ -64,7 +79,7 @@
           else :
               // Do something...
           endif;
-          ?>
+        ?>
         </ul> 
 
         <!-- loop through tab content and display within corresponding tab content area -->
@@ -91,7 +106,7 @@
           endif;
 
 
-          ?>
+        ?>
         </div>
     </div> 
  
@@ -102,8 +117,27 @@
         <div class="title"><h5>Featured Advertisers</h5></div>
         <div class="inner">
           <ul>
-            <li><img src="images/fa.png" alt=""></li>
-            <li><img src="images/fa.png" alt=""></li>
+            <?php
+              // Check rows exists.
+              if( have_rows('advertiser_banner') ):
+
+                  // Loop through rows.
+                  while( have_rows('advertiser_banner') ) : the_row();
+
+                      // Load sub field value.
+                      $adv_url = get_sub_field('advertiser_link');
+                      $adv_image = get_sub_field('advertiser_image');
+                      // Do something.
+                      echo "<li><a href=\"" . $adv_url . "\" target=\"_blank\"><img src=\"" . $adv_image . "\"></a></li>";
+
+                  // End loop.
+                  endwhile;
+
+              // No value.
+              else :
+                  // Do something...
+              endif;
+            ?>
           </ul>
         </div>        
       </div>
