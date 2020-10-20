@@ -84,29 +84,45 @@
 
         <!-- loop through tab content and display within corresponding tab content area -->
         <div class="resp-tabs-container">                                                        
-          <?php
 
-          // Check rows exists.
-          if( have_rows('tabs') ):
+          <?php if( have_rows('tabs') ): ?>
+          
+              <?php while ( have_rows('tabs') ) : the_row(); ?>
+                    
+                    <div>
 
-              // Loop through rows.
-              while( have_rows('tabs') ) : the_row();
+                    <?php while(has_sub_field("tab_content")):
+                    
+                      if(get_row_layout() == "wysiwyg_layout"):
+                      
+                        $wysiwyg = get_sub_field('wysiwyg');
+                        include ('template-parts/wysiwyg.php');
+                      
+                      elseif(get_row_layout() == "title_sponsors_layout"):
+                        include ('template-parts/title-sponsors.php');
 
-                  // Load sub field value.
-                  $tab_content = get_sub_field('tab_title_text');
-                  // Do something.
-                  echo "<div>" . $tab_content . "</div>";
+                      elseif(get_row_layout() == "presenting_sponsors_layout"):
+                        include ('template-parts/presenting-sponsors.php');         
 
-              // End loop.
-              endwhile;
+                      elseif(get_row_layout() == "training"):
+                        include ('template-parts/training.php');                                         
 
-          // No value.
-          else :
-              // Do something...
-          endif;
+                      elseif(get_row_layout() == "test_layout"):
+                        $test_content = get_sub_field('test_text');
+                        echo $test_content;
+                      
+                      endif;
+                    
+                    endwhile; ?>
 
+                    
+                          
+                    </div>
+          
+              <?php endwhile; ?>
+          
+          <?php endif; ?>	
 
-        ?>
         </div>
     </div> 
  

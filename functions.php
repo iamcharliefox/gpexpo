@@ -58,11 +58,12 @@ function create_posttype_event() {
                 'name' => __( 'Events' ),
                 'singular_name' => __( 'Event' )
             ),
+            'hierarchical' => true,
             'public' => true,
             'has_archive' => true,
             'rewrite' => array('slug' => 'event'),
             'show_in_rest' => true,
-            'supports'      => array( 'title', 'editor', 'thumbnail' ),
+            'supports'      => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
             'menu_icon' => 'dashicons-calendar-alt',
  
         )
@@ -89,3 +90,27 @@ function create_posttype_testimony() {
     );
 }
 add_action( 'init', 'create_posttype_testimony' );
+
+
+// TRAINING post type
+function create_posttype_training() {
+ 
+    register_post_type( 'training',
+        array(
+            'labels' => array(
+                'name' => __( 'Training' ),
+                'singular_name' => __( 'Training' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'training'),
+            'show_in_rest' => true,
+            'supports'      => array( 'title', 'editor', 'thumbnail' ),
+            'menu_icon' => 'dashicons-welcome-learn-more',
+        )
+    );
+}
+add_action( 'init', 'create_posttype_training' );
+
+
+
