@@ -11,7 +11,7 @@ Author URI: https://www.cf4.me/
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css");
-
+@import url(easy-responsive-tabs.css);
 * {
   margin: 0;
   padding: 0;
@@ -681,8 +681,8 @@ section.content .sidebar .sidebar-item {
 section.content .sidebar .sidebar-item .item {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 50px auto;
-      grid-template-columns: 50px auto;
+  -ms-grid-columns: 40px auto;
+      grid-template-columns: 40px auto;
   grid-gap: 8px;
   -ms-grid-rows: minmax(44px, auto);
       grid-template-rows: minmax(44px, auto);
@@ -694,10 +694,23 @@ section.content .sidebar .sidebar-item .item {
   padding-bottom: 12px;
 }
 
+section.content .sidebar .sidebar-item .icon {
+  color: #0A5AA8;
+}
+
+section.content .sidebar .sidebar-item .icon i {
+  font-size: 30px;
+}
+
 section.content .sidebar .sidebar-item .details {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
+}
+
+section.content .sidebar .sidebar-item .details a {
+  color: #0A5AA8;
+  font-weight: 600;
 }
 
 section.content .sidebar .sidebar-item .label {
