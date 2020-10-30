@@ -3,8 +3,8 @@ $images = get_sub_field('logos');
 
 if( $images ): ?>
       <div class="tab-section">
-            <h3>Presenting Sponsors</h3>
-            <div class="sponsor-grid-small">
+            <h3>Featured Exhibitors</h3>
+            <div class="sponsor-grid-large">
             
             <?php foreach( $images as $image ): ?>
             <?php $link = get_field('image_link', $image['ID']); ?>

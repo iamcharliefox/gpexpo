@@ -1,12 +1,12 @@
+
 <?php
   get_header();
 ?>
 
-<section class="hero" style="min-height:105px;">
+
+<section class="hero" style="background-image:url('<?php the_post_thumbnail_url() ?>')">
 
 </section>
-
-
 
 <section class="content">
   <div class="container">
@@ -36,13 +36,14 @@
     <div class="sidebar">
 
 
-      <div class="sidebar-item" style="text-align:center">
-      <center>
-      <img src="<?php echo get_template_directory_uri() . '/assets/images/BB-PH.png' ?>" alt="" style="padding:24px">
-      </center>
-      </div>
 
+      <div class="sidebar-item">
+        
+        <div class="inner">
 
+                                                  
+        </div>        
+      </div>      
     </div>
 
     <!-- <div class="ads">ads - Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nobis non labore exercitationem eligendi voluptates minima, sapiente eius, tempore molestias, ea adipisci voluptas! Deleniti atque, commodi natus iure rerum incidunt.</div> -->
@@ -52,11 +53,9 @@
 
 
 
-    
-
-
-
 
 <?php
   get_footer();
 ?>
+
+

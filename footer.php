@@ -2,13 +2,20 @@
 
 
 <?php 
-
+$today = current_time('Y-m-d');
 // args
 $args = array(
 	'numberposts'	=> 1,
 	'post_type'		=> 'events',
-	'meta_key'		=> 'event_status',
-	'meta_value'	=> 'happening now'
+	'meta_value'	=> 'happening now',
+      'meta_query' => array(
+          array(
+              'key' => 'start_date',
+              'value' => $today,
+              'compare' => '>=',
+              'type'      => 'DATE',
+          )                   
+        )
 );
 
 

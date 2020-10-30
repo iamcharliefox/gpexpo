@@ -8,24 +8,26 @@ function gpx_theme_support(){
     add_theme_support('post-thumbnails');
     add_theme_support('custom-logo');
     add_theme_support( 'custom-logo', array(
-        'height'      => 85,
-        'width'       => 175,
+        'height'      => 27,
+        'width'       => 225,
+        'flex-width'  => true,
         'flex-height' => true,
     ) );
+    add_image_size( 'product-carousel', 200, 150, true );
 }
 add_action('after_setup_theme','gpx_theme_support');
 
 // define menus and locations
 function gpx_menus(){
     $locations = array(
-        'primary' => "Top Navigation",
+        'primary' => "Attendee Navigation",
+        'exhibit' => "Exhibitor Navigation",
         'footer' => "Footer Navigation"
     );
     register_nav_menus($locations);
 }
 add_action('init','gpx_menus');
 
-add_image_size( 'Featured Advertiser Banner', 300, 150 );
 
 
 // register and enqueue styles
@@ -64,13 +66,79 @@ function create_posttype_event() {
             'has_archive' => true,
             'rewrite' => array('slug' => 'event'),
             'show_in_rest' => true,
-            'supports'      => array( 'title', 'editor', 'thumbnail'),
+            'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt'),
             'menu_icon' => 'dashicons-calendar-alt',
  
         )
     );
 }
 add_action( 'init', 'create_posttype_event' );
+
+
+// TRAINING post type
+function create_posttype_training() {
+ 
+    register_post_type( 'training',
+        array(
+            'labels' => array(
+                'name' => __( 'Training' ),
+                'singular_name' => __( 'Training' )
+            ),
+            'hierarchical' => true,
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'training'),
+            'show_in_rest' => true,
+            'supports'      => array( 'title', 'editor', 'excerpt' ),
+            'menu_icon' => 'dashicons-welcome-learn-more',
+        )
+    );
+}
+add_action( 'init', 'create_posttype_training' );
+
+
+// TRAVEL post type
+function create_posttype_travel() {
+ 
+    register_post_type( 'travel',
+        array(
+            'labels' => array(
+                'name' => __( 'Travel' ),
+                'singular_name' => __( 'Travel' )
+            ),
+            'hierarchical' => true,
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'travel'),
+            'show_in_rest' => true,
+            'supports'      => array( 'title', 'editor', 'thumbnail' ),
+            'menu_icon' => 'dashicons-airplane',
+        )
+    );
+}
+add_action( 'init', 'create_posttype_travel' );
+
+// SCHEDULE post type
+function create_posttype_schedule() {
+ 
+    register_post_type( 'schedule',
+        array(
+            'labels' => array(
+                'name' => __( 'Schedule' ),
+                'singular_name' => __( 'Schedule' )
+            ),
+            'hierarchical' => true,
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'schedule'),
+            'show_in_rest' => true,
+            'supports'      => array( 'title', 'editor', 'excerpt' ),
+            'menu_icon' => 'dashicons-schedule',
+        )
+    );
+}
+add_action( 'init', 'create_posttype_schedule' );
+
 
 // TESTIMONIAL post type
 function create_posttype_testimony() {
@@ -124,27 +192,6 @@ function create_type_taxonomy() {
 }
 
 
-// TRAINING post type
-function create_posttype_training() {
- 
-    register_post_type( 'training',
-        array(
-            'labels' => array(
-                'name' => __( 'Training' ),
-                'singular_name' => __( 'Training' )
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'rewrite' => array('slug' => 'training'),
-            'show_in_rest' => true,
-            'supports'      => array( 'title', 'editor', 'thumbnail' ),
-            'menu_icon' => 'dashicons-welcome-learn-more',
-        )
-    );
-}
-add_action( 'init', 'create_posttype_training' );
-
-
 
 if( function_exists('acf_add_options_page') ) {
 	
@@ -164,3 +211,51 @@ if( function_exists('acf_add_options_page') ) {
 		'redirect'		=> false
 	));    
 }
+
+// adds page specific class to body
+function add_page_slug_body_class( $classes ) {
+    global $post;
+    
+    if ( isset( $post ) ) {
+        $classes[] = 'page-' . $post->post_name;
+    }
+    return $classes;
+}
+
+add_filter( 'body_class', 'add_page_slug_body_class' );
+
+
+// prevents the post content from showing when exceprt is empty
+add_action( 'init', 'wpse17478_init' );
+function wpse17478_init()
+{
+    remove_filter( 'get_the_excerpt', 'wp_trim_excerpt' );
+}
+
+/**
+ * Registers an editor stylesheet for the theme.
+ */
+function wpdocs_theme_add_editor_styles() {
+    add_editor_style( 'custom-editor-style.css' );
+}
+add_action( 'admin_init', 'wpdocs_theme_add_editor_styles' );
+
+// adds conditional for page and child pages
+function is_tree($pid) {      // $pid = The ID of the page we're looking for pages underneath
+global $post;         // load details about this page
+if(is_page()&&($post->post_parent==$pid||is_page($pid))) 
+ return true;   // we're at the page or at a sub page
+else 
+ return false;  // we're elsewhere
+};
+
+// adds ordinal suffix to dates
+function ordinal($number) {
+    $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+    if ((($number % 100) >= 11) && (($number%100) <= 13))
+        return $number. 'th';
+    else
+        return $number. $ends[$number % 10];
+}
+
+

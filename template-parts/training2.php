@@ -1,5 +1,13 @@
 <h2>Training</h2>
 
+
+<?php
+$timezone = get_field_object( 'time_zone' );
+$timezone_value = $timezone['value'];
+$timezone_label = $timezone['choices'][ $timezone_value ];
+?>
+
+
 <?php 
 $intro = get_sub_field('training_intro');
 
@@ -15,14 +23,30 @@ if( $intro ): ?>
 
 
 
-
 <?php
-$event_dates = get_field('event_dates');
+$start_date = get_field("start_date");
+$date_range = get_field("event_duration");
+$end_date = date('F j', strtotime($start_date. " + {$date_range} days"));
 
-foreach ($event_dates as $event_date) {
+function dateRange( $first, $last, $step = '+1 day', $format = 'Y-m-d' ) {
+
+	$dates = array();
+	$current = strtotime( $first );
+	$last = strtotime( $last );
+
+	while( $current <= $last ) {
+
+		$dates[] = date( $format, $current );
+		$current = strtotime( $step, $current );
+	}
+	return $dates;
+}
 
 
+$training_session = dateRange( $start_date, $end_date);
 
+
+foreach ($training_session as $event_date) {
     
 
     $args = array(
@@ -45,7 +69,7 @@ foreach ($event_dates as $event_date) {
 
         <h3><?php echo $date_nice; ?></h3>
         <div class="training-row head">
-            <div class="training-time">Time (Eastern)</div>
+            <div class="training-time">Time <?php if (!empty($timezone)) { echo "(" . esc_html($timezone_label) . ")"; }?></div>
             <div class="training-classroom">Classroom</div>
             <div class="training-level">Level</div>
             <div class="training-details">Description</div>
@@ -59,12 +83,13 @@ foreach ($event_dates as $event_date) {
             <?php while ($the_query->have_posts()): $the_query->the_post();?>
             <div class="training-row">
                 <div class="training-time">
-                    <?php the_field('training_time'); ?>
+                    <?php if ( get_field( 'training_time_start' ) ): ?>
+                    <?php the_field('training_time_start'); ?>
                     to
-                    <?php
-                    $endTime = strtotime("+" . get_field('training_duration') . "minutes", strtotime(get_field('training_time')));
-                    echo date('g:i a', $endTime);
-                    ?>
+                    <?php the_field('training_time_end'); ?> <?php echo esc_attr($timezone_value); ?>
+                    <?php else: ?>
+                    -                    
+                    <?php endif; ?>
                 </div>
                 <div class="training-classroom">
                     <?php if ( get_field( 'training_classroom' ) ): ?>
@@ -92,8 +117,9 @@ foreach ($event_dates as $event_date) {
             </div>
             <hr/>
             <?php endwhile;?>
-
+            <br/>
     <?php endif;?>
+    
   
     <?php wp_reset_query(); // Restore global post data stomped by the_post(). ?>
 
