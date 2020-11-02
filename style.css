@@ -195,8 +195,33 @@ section.hero .hero-slide-container {
 }
 
 section.hero .hero-slide {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+}
+
+section.hero .hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
+  z-index: 1;
+  opacity: 0;
+  -webkit-transition: opacity .75s ease-out, -webkit-transform 3s ease-out;
+  transition: opacity .75s ease-out, -webkit-transform 3s ease-out;
+  transition: transform 3s ease-out, opacity .75s ease-out;
+  transition: transform 3s ease-out, opacity .75s ease-out, -webkit-transform 3s ease-out;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+section.hero .hero-background.active {
+  opacity: 1;
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
 }
 
 section.hero .hero-slide-inner {
@@ -210,6 +235,8 @@ section.hero .hero-slide-inner {
       -ms-flex-pack: center;
           justify-content: center;
   justify-items: center;
+  position: relative;
+  z-index: 5;
 }
 
 section.hero .title {
@@ -236,6 +263,18 @@ section.hero .details .dates {
 section.hero .details .venue {
   font-weight: 700;
   text-align: center;
+}
+
+section.hero .format {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #222;
+  background-color: greenyellow;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 20px;
+  border-radius: 15px;
 }
 
 section.hero .slick-arrow {
@@ -382,6 +421,59 @@ section.upcoming {
   font-size: 14px;
 }
 
+section.upcoming h2 {
+  font-size: 24px;
+  line-height: 1.5em;
+}
+
+section.upcoming .upcoming-table {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 4fr;
+      grid-template-columns: 1fr 4fr;
+  margin-top: 48px;
+  grid-row-gap: 24px;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+section.upcoming .upcoming-table .thumb {
+  min-height: 100px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+section.upcoming .upcoming-table .thumb .status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 30px;
+  padding: 10px;
+  background-color: rgba(120, 156, 61, 0.7);
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+}
+
+section.upcoming .upcoming-table .event-details {
+  text-align: left;
+  background-color: #fafafa;
+  padding: 24px;
+}
+
+section.upcoming .upcoming-table .event-details.archive {
+  background-color: #eee;
+  opacity: 0.6;
+}
+
+section.upcoming .upcoming-table .event-details .title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
 section.upcoming .upcoming-grid {
   display: -ms-grid;
   display: grid;
@@ -434,30 +526,30 @@ section.upcoming .upcoming-grid .title {
   font-weight: 700;
 }
 
-section.upcoming .upcoming-grid .details {
+section.upcoming .upcoming-grid .description {
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 1.45em;
+}
+
+section.upcoming .details {
   font-size: 14px;
   font-weight: 700;
   margin: 10px 0;
 }
 
-section.upcoming .upcoming-grid .details i {
+section.upcoming .details i {
   color: #AB4825;
 }
 
-section.upcoming .upcoming-grid .details > div {
+section.upcoming .details > div {
   margin-bottom: 5px;
   display: inline-block;
   font-weight: bold;
 }
 
-section.upcoming .upcoming-grid .details .dates {
+section.upcoming .details .dates {
   margin-right: 15px;
-}
-
-section.upcoming .upcoming-grid .description {
-  font-size: 13px;
-  font-weight: normal;
-  line-height: 1.45em;
 }
 
 section.upcoming .infobox {
@@ -483,6 +575,10 @@ section.upcoming .infobox .title {
   margin-bottom: 3px;
 }
 
+.page-events .upcoming {
+  text-align: left;
+}
+
 section.why-attend {
   background-color: #0A5AA8;
   text-align: center;
@@ -497,11 +593,12 @@ section.why-attend .container {
 
 section.why-attend .why-attend-inner {
   background-color: rgba(10, 90, 168, 0.9);
-  padding: 30px;
+  padding: 50px 30px;
 }
 
 section.why-attend h3 {
-  margin-top: 1em;
+  margin-top: .25em;
+  padding-bottom: .25em;
 }
 
 section.why-attend h3 span {
@@ -511,6 +608,10 @@ section.why-attend h3 span {
 
 section.why-attend p {
   max-width: 920px;
+  margin: auto;
+}
+
+section.why-attend img {
   margin: auto;
 }
 
@@ -1200,5 +1301,83 @@ section.exhibit-upcoming table td.event {
       align-content: center;
   font-size: 12px;
   font-weight: bold;
+}
+
+.bug {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 250px;
+  height: 60px;
+  background-color: #222;
+  z-index: 10;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 60px auto 20px;
+      grid-template-columns: 60px auto 20px;
+  cursor: pointer;
+  -webkit-transform: translateX(215px);
+          transform: translateX(215px);
+  -webkit-transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out;
+  opacity: 0;
+}
+
+.bug.inactive {
+  -webkit-transform: translateX(215px);
+          transform: translateX(215px);
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  opacity: 1;
+}
+
+.bug.active {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+  opacity: 1;
+}
+
+.bug .bug-icon {
+  background-color: #789C3D;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.bug .bug-icon i {
+  font-size: 30px;
+  color: #fff;
+}
+
+.bug .bug-info {
+  max-height: 60px;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  padding: 10px;
+}
+
+.bug .bug-info span {
+  display: block;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.bug .bug-info a {
+  color: #fff;
+}
+
+.bug .bug-close {
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 12;
 }
 /*# sourceMappingURL=style.css.map */

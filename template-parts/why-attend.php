@@ -4,7 +4,16 @@
 <section class="why-attend" id="why-attend" style="background-image:url('<?php the_post_thumbnail_url() ?>')"> 
   <div class="why-attend-inner">
     <div class="container">
-      <h3>Why Attend <span>THE GRAPHICS PRO EXPO</span>?</h3>
+      
+              <?php 
+          if(function_exists('the_custom_logo')){
+            $custom_logo_id = get_theme_mod('custom_logo');
+            $logo = wp_get_attachment_image_src($custom_logo_id, 'full' );
+          }
+        ?>
+        
+         <img src="<?php echo $logo[0] ?>" width="500" height="auto" alt="<?php echo get_bloginfo('name');?>">
+         <h3>You Gotta Be There!</h3>
      <p><?php echo $subtitle; ?></p>
 
       <div class="video-container">

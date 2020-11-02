@@ -1,15 +1,31 @@
 
 
+
 $(document).ready(function(){
   console.log('Javascript Loaded...');
+  localStorage.setItem('eventBugShown', 'true');
+
   $('.hero-slide-container').slick({
     infinite: true,
     autoplay: true,
     autoplaySpeed: 5000,
     fade: true,
     dots: true,
+    lazyLoad: 'ondemand',
     speed: 1200
   });
+
+
+  // On before slide change
+$('.hero-slide-container').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+  $('.hero-background').removeClass('active');
+  $('div[data-slick-index = "'+nextSlide+'"]').find('.hero-background').addClass('active');
+});
+
+
+// $('hero-slide-container .slick-arrow').on('click', function() {
+// $('.hero-background').removeClass('active');
+// });
 
   $('.testimonials-container').slick({
     autoplay: true,
@@ -38,6 +54,23 @@ $(document).ready(function(){
     active_content_border_color: '#ffffff',
   });  
 
+
+
+
+console.log(localStorage.getItem('bug'));
+ $('.bug').addClass(localStorage.getItem('bug'));
+
+$('.bug-close').on('click', function() {
+    localStorage.setItem('bug', 'inactive');
+    $('.bug').removeClass('active');
+    $('.bug').addClass('inactive');
+});
+
+$('.bug-icon').on('click', function() {
+    localStorage.setItem('bug', 'active');
+    $('.bug').removeClass('inactive');
+    $('.bug').addClass(localStorage.getItem('bug'));
+});
 
 
 function loadFaq() {

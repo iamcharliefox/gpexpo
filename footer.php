@@ -26,12 +26,22 @@ $the_query = new WP_Query( $args );
 <?php if( $the_query->have_posts() ): ?>
 
 	<?php while( $the_query->have_posts() ) : $the_query->the_post(); ?>
-		<div class="bug" style="position:fixed;right:10px; bottom:10px;z-index:10;">
-      <a href="<?php the_permalink(); ?>">
-        <img src="<?php echo get_template_directory_uri() . '/assets/images/event-in-progress.svg' ?>" alt="">
-      </a>
+		<div class="bug">
+      <div class="bug-icon"><i class="far fa-clock"></i></div>
+      <div class="bug-info"><a href="<?php the_permalink(); ?>">Event in Progress<span>Click here to join</span></a></div>
+      <div class="bug-close">&times;</div>
 		</div>
 	<?php endwhile; ?>
+
+  <?php else: ?>
+
+
+		<div class="bug">
+      <div class="bug-icon"><i class="fas fa-bullhorn"></i></div>
+      <div class="bug-info"><a href="/exhibit">Exhibit with us<span>Learn more</span></a></div>
+      <div class="bug-close">&times;</div>
+		</div>
+
 
 <?php endif; ?>
 
