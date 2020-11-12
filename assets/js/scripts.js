@@ -35,6 +35,7 @@ $('.hero-slide-container').on('beforeChange', function(event, slick, currentSlid
     slidesToScroll: 1    
   });  
 
+
     $('.product-carousel').slick({
     autoplay: true,
     autoplaySpeed: 0,
@@ -46,6 +47,18 @@ $('.hero-slide-container').on('beforeChange', function(event, slick, currentSlid
     pauseOnHover: false,
     speed: 1000
   });  
+
+      $('.adv-slider').slick({
+    autoplay: true,
+    autoplaySpeed: 3000,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    pauseOnHover: true,
+    speed: 1000,
+    fade: true
+  }); 
 
   $('#tab').easyResponsiveTabs({
     activetab_bg: '#ffffff',

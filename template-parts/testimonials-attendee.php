@@ -29,7 +29,7 @@
       <div class="card">
         <div class="photo" style="background-image:url('<?php the_post_thumbnail_url() ?>')"></div>
         <div class="name"><?php the_title(); ?></div>
-        <div class="company">Position - Company Name</div>
+        <div class="company"><?php the_field('position'); ?> - <?php the_field('company_name'); ?></div>
         <div class="testimony"><?php the_content(); ?></div>
       </div>
 

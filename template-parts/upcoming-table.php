@@ -41,14 +41,18 @@
     $label = $status['choices'][ $value ];
     ?>
 
-      <div class="thumb" style="background-image:url('<?php the_post_thumbnail_url() ?>')">
-          <div class="status <?php echo esc_html($label); ?>">
-            <?php echo esc_html($label); ?>
-          </div> 
+      <div class="thumb">
+          <a href="<?php the_permalink(); ?>">
+            <div class="thumb-inner" style="background-image:url('<?php the_post_thumbnail_url() ?>')">
+              <div class="status <?php echo esc_html($label); ?>">
+                <?php echo esc_html($label); ?>
+              </div> 
+            </div>
+          </a>
       </div>
       <div class="event-details">
         <div class="title">
-          <?php the_title(); ?>
+          <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
         </div>
         <div class="details">
           <div class="dates">

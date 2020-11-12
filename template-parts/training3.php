@@ -1,13 +1,4 @@
 <h2>Training</h2>
-
-
-<?php
-$timezone = get_field_object( 'time_zone' );
-$timezone_value = $timezone['value'];
-$timezone_label = $timezone['choices'][ $timezone_value ];
-?>
-
-
 <?php 
 $intro = get_sub_field('training_intro');
 
@@ -15,70 +6,80 @@ if( $intro ): ?>
 
 <?php echo $intro; ?>
 
+
 <?php endif; ?>
-
-
-
 <br/><br/>
-
-
 
 <?php
 $start_date = get_field("start_date");
-$date_range = get_field("event_duration");
 $end_date = get_field("end_date");
-
-
-
-
 $training_session = dateRange( $start_date, $end_date);
+$show_code = get_field('show_code');
+$show_code_ID = $show_code->term_id;
+$timezone = get_field_object( 'time_zone' );
+$timezone_value = $timezone['value'];
+$timezone_label = $timezone['choices'][ $timezone_value ];
+
 
 
 foreach ($training_session as $event_date) {
-    $time = current_time( 'timestamp' ); // Get current unix timestamp
 
-    $args = array(
-        'numberposts' => -1,
-        'post_type' => 'training',
-        'meta_key' => 'training_date',
-        'meta_value' => $event_date,
-        'meta_type' => 'DATETIME',
-        'orderby' => 'training_time_start',
-        'order' => 'ASC',
+    $event_date_nice = date("F j, Y", strtotime($event_date)); ?>
 
-
-        
-
-    );
-
-    $the_query = new WP_Query($args);?>
-    
-    <?php if ($the_query->have_posts()): ?>
-
-        <?php
-
-        $date_nice = date("F j", strtotime($event_date)); ?>
-
-        <h3><?php echo $date_nice; ?></h3>
+    <h3><?php echo $event_date_nice; ?></h3>
         <div class="training-row head">
             <div class="training-time">Time <?php if (!empty($timezone)) { echo "(" . esc_html($timezone_label) . ")"; }?></div>
             <div class="training-classroom">Classroom</div>
             <div class="training-level">Level</div>
             <div class="training-details">Description</div>
         </div>
-        <hr>
+        <hr>    
+
+    <?php
+    $trainingargs = array(
+    'numberposts' => -1,
+    'post_type' => 'training',
+    'meta_query' => array(
+        'day_clause' => array(
+        'key' => 'training_date',
+        'value' => $event_date,
+        'compare' => 'EXISTS',
+        'type' => 'DATE'
+        ),
+        'time_clause' => array(
+        'key' => 'training_time_start',
+        'compare' => 'EXISTS',
+        'type' => 'TIME'
+        ),
+        'code_clause' => array(
+        'key' => 'show_code',
+        'value' => $show_code_ID,
+        'compare' => 'EXISTS',
+        )
+    ),
+    'orderby' => array(
+        'day_clause' => 'ASC',
+        'time_clause' => 'ASC',
+        'title' => 'ASC'
+    )
+    );
 
 
 
-        <!-- title -->
+    $training_query = new WP_Query($trainingargs); ?>
 
-            <?php while ($the_query->have_posts()): $the_query->the_post();?>
+    <?php if ($training_query->have_posts()): ?>
+
+
+    <?php while ($training_query->have_posts()): $training_query->the_post();?>
+
+
             <div class="training-row">
                 <div class="training-time">
                     <?php if ( get_field( 'training_time_start' ) ): ?>
                     <?php the_field('training_time_start'); ?>
                     to
-                    <?php the_field('training_time_end'); ?> <?php echo esc_attr($timezone_value); ?>
+                    <?php the_field('training_time_end'); ?>
                     <?php else: ?>
                     -                    
                     <?php endif; ?>
@@ -108,14 +109,24 @@ foreach ($training_session as $event_date) {
                 </div>
             </div>
             <hr/>
-            <?php endwhile;?>
-            <br/>
-    <?php endif;?>
-    
-  
-    <?php wp_reset_query(); // Restore global post data stomped by the_post(). ?>
 
 
-<?php }; ?>
+
+    <?php endwhile;?>
+    <?php else: ?>
+    no scheduled events found
+<?php endif;?>
+<br/><br/>
 
 
+<?php };
+
+?>
+
+<?php
+    // Reset things, for good measure
+    wp_reset_postdata();
+
+// end the loop
+
+?>

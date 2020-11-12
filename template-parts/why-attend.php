@@ -15,33 +15,39 @@
          <img src="<?php echo $logo[0] ?>" width="500" height="auto" alt="<?php echo get_bloginfo('name');?>">
          <h3>You Gotta Be There!</h3>
      <p><?php echo $subtitle; ?></p>
-
+<?php if( get_sub_field('video') ): ?>
       <div class="video-container">
         <div class="embed-container">
-          <?php the_sub_field('video'); ?>
-          <style>
-            .embed-container { 
-              position: relative; 
-              padding-bottom: 56.25%;
-              overflow: hidden;
-              max-width: 100%;
-              height: auto;
-            } 
+          
+            <?php the_sub_field('video'); ?>
+            <style>
+              .embed-container { 
+                position: relative; 
+                padding-bottom: 56.25%;
+                overflow: hidden;
+                max-width: 100%;
+                height: auto;
+              } 
 
-            .embed-container iframe,
-            .embed-container object,
-            .embed-container embed { 
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-            }
-          </style>        
+              .embed-container iframe,
+              .embed-container object,
+              .embed-container embed { 
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+              }
+            </style>  
+  
         </div>
       </div>
 
-
+          <?php else: ?>
+          <div class="featured-image">
+            <?php the_post_thumbnail('large'); ?>
+          </div>
+          <?php endif; ?>    
 
       <div class="icon-list-grid">
 

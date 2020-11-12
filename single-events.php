@@ -4,27 +4,54 @@
 <section class="hero" style="background-image:url('<?php the_post_thumbnail_url(); ?>')">
     <div class="hero-inner">
         <div class="container">
+
+            <?php if (get_field('show_format') == 'Online') { ?>
+              <!-- <div class="format">
+                Online Event
+              </div> -->
+              <img src="<?php echo get_template_directory_uri() . '/assets/images/breakaway.svg' ?>" alt="" class="breakaway-logo-small">
+            <?php }; ?>
+              
             <div class="title">
                 <h2><?php the_title(); ?></h2>
             </div>
-            <div class="details">
-                <!-- events dates -->
-                <i class="far fa-calendar"></i>
-                <?php
-                $start_date = get_field("start_date");
-                $date_range = get_field("event_duration");
-                $end_date = date('F j', strtotime($start_date . " + {$date_range} days"));
-                echo $start_date . " - " . $end_date;
-                ?>
-								
+
+            <?php if( get_field('featuring') ): ?>
+            <div class="featuring">
+              Featuring: <?php the_field('featuring'); ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="details-single">
+
                 <!-- event location -->
                 <?php
                 $venue = get_field('venue');
                 $map = get_field('google_maps_link');
                 if (!empty($venue)): ?>
-	                &nbsp;&nbsp;<i class="fas fa-map-marker-alt"></i>
-	                <a href="<?php echo esc_url($map); ?>" target="blank"><?php the_field('venue'); ?></a>
+
+	                <?php if( get_field('google_maps_link') ): ?>
+                    <a href="<?php echo esc_url($map); ?>" target="blank"><?php the_field('venue'); ?></a>
+                  <?php else: ?>
+                    <?php the_field('venue'); ?>
+                  <?php endif; ?>
+                  <br/>
                 <?php endif; ?>
+
+
+                <!-- events dates -->
+            
+            <?php
+            $start_date = DateTime::createFromFormat('F j, Y', get_field("start_date"));
+            $end_date = DateTime::createFromFormat('F j, Y', get_field("end_date"));
+            if ($start_date != $end_date) { 
+              echo $start_date->format( 'F' ) . " " . ordinal($start_date->format( 'j' )) . " - " . ordinal($end_date->format( 'j' )) . ", " . $start_date->format( 'Y' ); 
+            } else { 
+              echo $start_date->format( 'F' ) . " " . ordinal($start_date->format( 'j' )) . ", " . $start_date->format( 'Y' ); 
+            }; ?>
+
+								
+
             </div>
         </div>
     </div>
@@ -38,13 +65,50 @@
 			
 				<!-- INTRO START -->
         <div class="intro">
-          <?php if (has_post_thumbnail()) { the_post_thumbnail('large', ['class' => 'article-hero']); } ?>
+
+<?php if( get_field('video') ): ?>
+	          <div class="embed-container">
+            <?php the_field('video'); ?>
+          </div>
+          <style>
+              .embed-container { 
+                  position: relative; 
+                  padding-bottom: 56.25%;
+                  overflow: hidden;
+                  max-width: 100%;
+                  height: auto;
+              } 
+
+              .embed-container iframe,
+              .embed-container object,
+              .embed-container embed { 
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+              }
+          </style>          
+
+<?php else: ?>
+  <?php if (has_post_thumbnail()) { the_post_thumbnail('large', ['class' => 'article-hero']); } ?>
+<?php endif; ?>
+
+          
+          
+          
+
+
           <article>
             <!-- post editor content -->
             <?php if (have_posts()) {
 		        while (have_posts()) {
-		            the_post();
-		            the_content();
+		            the_post(); ?>
+		            <div class="the-content"><?php the_content(); ?>
+                
+                </div>
+
+                <?php 
 			        }
 				    } ?>
           </article>
@@ -62,7 +126,7 @@
 					      while (have_rows('tabs')):
 					        the_row();
 					        $tab_title = get_sub_field('tab_title_text');
-					        echo "<li>" . $tab_title . "</li>";
+					        echo "<li id='". $tab_title ."'>" . $tab_title . "</li>";
 					      endwhile;
 							endif; ?>
             </ul>
@@ -85,11 +149,15 @@
 											elseif (get_row_layout() == "featured_exhibitors_layout"):
 												include 'template-parts/featured-exhibitors.php';	
 					            elseif (get_row_layout() == "training"):
-					              include 'template-parts/training2.php';
+					              include 'template-parts/training3.php';
 											elseif (get_row_layout() == "schedule"):
-												include 'template-parts/schedule.php';												
+												include 'template-parts/schedule3.php';												
+											elseif (get_row_layout() == "specials"):
+												include 'template-parts/specials.php';	     
+											elseif (get_row_layout() == "travel"):
+												include 'template-parts/travel.php';	                                            											
 											elseif (get_row_layout() == "exhibitor_list"):
-												include 'template-parts/exh-list.php';												
+												include 'template-parts/exh-list.php';	                        
 					            endif;
 					          endwhile; 
 										?>
@@ -250,21 +318,43 @@
                         <a href="<?php echo $pcs_link; ?>" class="button blue">REGISTER HERE</a>
                         <?php endif; ?>
 
-                        <!-- add to calendar button -->
+
+                        <!-- login or add to calendar -->
+                        <?php if ($value == "Happening Now"): ?>
+
                         <?php
-										      $cal = get_field('calendar_file');
-										      if (!empty($cal)): ?>
-                        <a href="<?php echo $cal['url']; ?>" class="button blue">ADD TO CALENDAR</a>
+										      $vc_link = get_field('vconference_link');
+										      if (!empty($vc_link)): ?>
+                            <a href="<?php echo $vc_link; ?>" class="button blue" target="_blank">LOGIN HERE</a>
+                          <?php endif; ?>
+
+
+                        <?php else: ?>
+
+                          <!-- add to calendar button -->
+                          <?php
+                            $cal = get_field('calendar_file');
+                            if (!empty($cal)): ?>
+                          <a href="<?php echo $cal['url']; ?>" class="button blue">ADD TO CALENDAR</a>
+                          <?php endif; ?>
+
                         <?php endif; ?>
+                      
                     </div>
                 </div>
             </div>
+
+
+                <?php include 'template-parts/event-videos.php'; ?>
+           
 
             <div class="sidebar-item" style="text-align:center">
                 <center>
                     <img src="<?php echo get_template_directory_uri() . '/assets/images/BB-PH.png'; ?>" alt="" style="padding:24px">
                 </center>
             </div>
+
+
         </div>
 
         <!-- <div class="ads">ads - Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nobis non labore exercitationem eligendi voluptates minima, sapiente eius, tempore molestias, ea adipisci voluptas! Deleniti atque, commodi natus iure rerum incidunt.</div> -->

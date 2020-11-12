@@ -67,24 +67,30 @@ endif;
 <section class="exhibit-upcoming">
 	  <div class="container">
 		<h3>Upcoming <span>Events</span></h3>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec sed odio dui.</p>
+		
 	
 	
 	
 		<?php
+
+$today = current_time('Y-m-d');
+  $start_date = get_sub_field("start_date");
+  $end_date = get_sub_field("end_date");
+
 		$upcoming_loop = new WP_Query( array(
-		  'post_type' => 'Events',
-		  'posts_per_page' => -1,
-		  'meta_key' => 'start_date',
-			'orderby' => 'meta_value',
-			'order' => 'ASC',
-			'meta_query' => array(
-				array(
-					'key' => 'start_date',
-					'value' => date("YYmmdd"),
-					'compare' => '<='
-				)                   
-			  )
+    'post_type' => 'Events',
+    'posts_per_page' => '-1',
+    'meta_key' => 'start_date',
+      'orderby' => 'meta_value',
+      'order' => 'ASC',
+      'meta_query' => array(
+          array(
+              'key' => 'end_date',
+              'value' => $today,
+              'compare' => '>=',
+              'type'      => 'DATE',
+          )                   
+        )
 		  )
 		);
 		?>
@@ -94,7 +100,7 @@ endif;
 				<tr>
 					<th>Date(s)</th>
 					<th>Event</th>
-					<th>&nbsp;</th>
+
 				</tr>
 			<?php while ( $upcoming_loop->have_posts() ) : $upcoming_loop->the_post(); ?>
 		    	<tr>
@@ -107,7 +113,7 @@ endif;
 						<?php the_field('start_date'); ?> - <?php echo $newDate; ?>	, 2021	
 					</td>					
 					<td class="event"><?php the_title(); ?></td>
-					<td></td>
+
 
 				</tr>
 			<?php endwhile; wp_reset_query(); ?>
@@ -164,18 +170,11 @@ endif;
 						$wysiwyg = get_sub_field('wysiwyg');
 						include ('template-parts/wysiwyg.php');
 					  
-					  elseif(get_row_layout() == "title_sponsors_layout"):
-						include ('template-parts/title-sponsors.php');
+					  elseif(get_row_layout() == "files_cas"):
+						include ('template-parts/cas-list.php');
 
-					  elseif(get_row_layout() == "presenting_sponsors_layout"):
-						include ('template-parts/presenting-sponsors.php');         
-
-					  elseif(get_row_layout() == "training"):
-						// include ('template-parts/training.php');       
-						include ('template-parts/training2.php');           
-
-					  elseif(get_row_layout() == "exhibitor_list"):
-						include ('template-parts/exh-list.php');                                                      
+					  elseif(get_row_layout() == "files_list"):
+						include ('template-parts/files-list.php');                                                     
 					  
 					  endif;
 					
@@ -207,13 +206,20 @@ endif;
 <section class="testimonials">
   <div class="container">
 	<h3>What our <span>Exhibitors</span> have to say</h3>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec sed odio dui.</p>    
 
 	<?php
-	$testimonial_loop = new WP_Query( array(
-	  'post_type' => 'Testimony',
-	  'posts_per_page' => -1,
-	  )
+	$testimonial_loop = new WP_Query( 
+    array(
+        'post_type' => 'Testimony',
+        'showposts' => -1,
+        'tax_query' => array(
+            array(
+                'taxonomy'  => 'types',
+                'terms'     =>'exhibitor',
+                'field'     => 'slug'
+            )
+        )
+      )
 	);
 	?>
 
