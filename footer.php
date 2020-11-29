@@ -51,7 +51,7 @@ $the_query = new WP_Query( $args );
 
 
 
-<section class="footer">
+<div class="gpx-footer cf">
 <div class="footer-top"></div>
 <div class="footer-nav">
   <div class="container">

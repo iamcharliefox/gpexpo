@@ -228,57 +228,6 @@ function create_posttype_schedule() {
 add_action( 'init', 'create_posttype_schedule' );
 
 
-// TESTIMONIAL post type
-function create_posttype_testimony() {
- 
-    register_post_type( 'testimony',
-        array(
-            'labels' => array(
-                'name' => __( 'Testimonials' ),
-                'singular_name' => __( 'Testimonial' )
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'rewrite' => array('slug' => 'testimony'),
-            'show_in_rest' => true,
-            'supports'      => array( 'title', 'editor', 'thumbnail'),
-            'menu_icon' => 'dashicons-businessperson',
-        )
-    );
-}
-add_action( 'init', 'create_posttype_testimony' );
-
-
-// TYPE taxonomy for testimonials
-add_action( 'init', 'create_type_taxonomy', 0 );
- 
-//create a custom taxonomy name it "type" for your posts
-function create_type_taxonomy() {
- 
-  $labels = array(
-    'name' => _x( 'Type', 'taxonomy general name' ),
-    'singular_name' => _x( 'Type', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Types' ),
-    'all_items' => __( 'All Types' ),
-    'parent_item' => __( 'Parent Type' ),
-    'parent_item_colon' => __( 'Parent Type:' ),
-    'edit_item' => __( 'Edit Type' ), 
-    'update_item' => __( 'Update Type' ),
-    'add_new_item' => __( 'Add New Type' ),
-    'new_item_name' => __( 'New Type Name' ),
-    'menu_name' => __( 'Type' ),
-  ); 	
- 
-  register_taxonomy('types',array('testimony'), array(
-    'hierarchical' => true,
-    'labels' => $labels,
-    'show_ui' => true,
-    'show_admin_column' => true,
-    'query_var' => true,
-    'rewrite' => array( 'slug' => 'type' ),
-  ));
-}
-
 
 
 if( function_exists('acf_add_options_page') ) {
@@ -289,16 +238,22 @@ if( function_exists('acf_add_options_page') ) {
 		'menu_slug' 	=> 'options-acf',
 		'capability'	=> 'edit_posts',
 		'redirect'		=> false
-	));
+	));     
 
 	acf_add_options_page(array(
-		'page_title' 	=> 'Help',
-		'menu_title'	=> 'Help',
-		'menu_slug' 	=> 'options-help',
-		'capability'	=> 'edit_posts',
-		'redirect'		=> false
+		'page_title' 	=> 'Attendee Content',
+		'menu_title'	=> 'Attendee Content',
+		'parent_slug' 	=> 'options-acf',
 	));    
+
+	acf_add_options_page(array(
+		'page_title' 	=> 'Exhibitor Content',
+		'menu_title'	=> 'Exhibitor Content',
+		'parent_slug' 	=> 'options-acf',
+	));        
+ 
 }
+
 
 // adds page specific class to body
 function add_page_slug_body_class( $classes ) {
@@ -422,3 +377,17 @@ function ics_gen ($start, $end, $tz, $code, $name, $description, $url, $location
 
 
 
+// PHP program to sort array of dates  
+  
+// user-defined comparison function  
+// based on timestamp 
+function compareByTimeStamp($time1, $time2) 
+{ 
+    if (strtotime($time1) > strtotime($time2)) 
+        return 1; 
+    else if (strtotime($time1) < strtotime($time2))  
+        return -1; 
+    else
+        return 0; 
+} 
+  

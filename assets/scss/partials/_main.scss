@@ -1,0 +1,23 @@
+
+.gpx-main {
+  width: 100%;
+  background-color: #fff;
+  min-height:300px;
+  display: inline-block;
+  margin-bottom: $gutter;
+  border-radius: $rad;
+
+  overflow: hidden;
+
+  @include xl {
+    width: calc(100% - #{$sidebar-width} - #{$gutter});
+  }  
+
+  &.full-width {
+    width: 100%;
+  }
+
+  article {
+    margin: $gutter;
+  }
+}

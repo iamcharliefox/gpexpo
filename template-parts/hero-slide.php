@@ -4,6 +4,8 @@ $today = current_time('Y-m-d');
 $start_date = get_field("start_date");
 $end_date = get_field("end_date");
 
+
+
 $loop = new WP_Query( array(
   'post_type' => 'Events',
   'posts_per_page' => 6,
@@ -25,21 +27,26 @@ $loop = new WP_Query( array(
 <?php if( get_field('transition_hero') ): ?>
 <div class="hero-slide" style="background-image:url('<?php echo get_template_directory_uri() . '/assets/images/topo-new.svg' ?>')">
 
-  <div class="hero-slide-inner">
-    <img src="<?php echo get_template_directory_uri() . '/assets/images/nbm-gpx.svg' ?>" alt="">
+  <div class="hero-slide-inner" style="background-color:rgba(0,83,167,0.4">
+    <img src="<?php echo get_template_directory_uri() . '/assets/images/nbm-gpx.svg' ?>" alt="" style="max-width:80%">
   </div>
 </div>
 <?php endif; ?>
 
 
 <?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
+<?php
+    $showformat = get_field_object('show_format');
+    $showformatvalue = $showformat['value'];
+    $showformatlabel = $showformat['choices'][ $showformatvalue ];
+?>
 <div class="hero-slide">
   <div class="hero-background" style="background-image:url('<?php the_post_thumbnail_url() ?>')">
 
   </div>
   <div class="hero-slide-inner">
     
-      <?php if (get_field('show_format') == 'Online') { ?>
+      <?php if ($showformatvalue == 'online') { ?>
        
         <!-- <div class="format">
           Online Event
@@ -48,7 +55,7 @@ $loop = new WP_Query( array(
       <?php }; ?>
     
 
-    <div class="title <?php the_field('show_format')?>"><h2><?php the_title(); ?></h2></div>
+    <div class="title <?php echo $showformatvalue; ?>"><h2><?php the_title(); ?></h2></div>
 
 
             <?php if( get_field('featuring') ): ?>
@@ -84,9 +91,9 @@ $loop = new WP_Query( array(
             $start_date = DateTime::createFromFormat('F j, Y', get_field("start_date"));
             $end_date = DateTime::createFromFormat('F j, Y', get_field("end_date"));
             if ($start_date != $end_date) { 
-              echo $start_date->format( 'F' ) . " " . ordinal($start_date->format( 'j' )) . " - " . ordinal($end_date->format( 'j' )) . ", " . $start_date->format( 'Y' ); 
+              echo $start_date->format( 'F' ) . " " . $start_date->format( 'j' ) . "-" . $end_date->format( 'j' ) . ", " . $start_date->format( 'Y' ); 
             } else { 
-              echo $start_date->format( 'F' ) . " " . ordinal($start_date->format( 'j' )) . ", " . $start_date->format( 'Y' ); 
+              echo $start_date->format( 'F' ) . " " . $start_date->format( 'j' ) . ", " . $start_date->format( 'Y' ); 
             }; ?>
           </div>
         <?php endif; ?>

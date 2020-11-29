@@ -1,47 +1,46 @@
 <!-- TESTIMONIALS -->
-
 <section class="testimonials">
   <div class="container">
     <h3>What our <span>Attendees</span> have to say</h3>
-    <p><?php the_sub_field('subtitle'); ?></p>    
-
-    <?php
-    $testimonial_loop = new WP_Query(
-    array(
-        'post_type' => 'Testimony',
-        'showposts' => -1,
-        'tax_query' => array(
-            array(
-                'taxonomy'  => 'types',
-                'terms'     =>'attendee',
-                'field'     => 'slug'
-            )
-        )
-      )
-    );
+    <!-- get subtitle from options page -->
+    <?php if( have_rows('testimonials_attendee_group', 'option') ): ?>
+        <?php while( have_rows('testimonials_attendee_group', 'option') ): the_row(); ?>
+            <?php if( get_sub_field('subtitle') ): ?><p><?php the_sub_field('subtitle'); ?></p><?php endif; ?>
+        <?php endwhile; ?>
+    <?php endif; ?>  
 
 
-    ?>
-
+    <!-- get testimonies from options page -->
+    <?php if( have_rows('testimonials_attendee_group', 'option') ): ?>
+        <?php while( have_rows('testimonials_attendee_group', 'option') ): the_row(); ?>
 
     <div class="testimonials-container">
-      <?php while ( $testimonial_loop->have_posts() ) : $testimonial_loop->the_post(); ?>
+      <?php
+      $rows = get_sub_field('testimonials');
+      if( $rows ) {
+        foreach( $rows as $row ) { 
+          $name = $row['name'];
+          $company = $row['company_name'];
+          $position = $row['position_title'];
+          $testimony = $row['testimony'];
+          $photo = $row['photo'];
+        ?>      
       <div class="card">
-        <div class="photo" style="background-image:url('<?php the_post_thumbnail_url() ?>')"></div>
-        <div class="name"><?php the_title(); ?></div>
-        <div class="company"><?php the_field('position'); ?> - <?php the_field('company_name'); ?></div>
-        <div class="testimony"><?php the_content(); ?></div>
+        <div class="photo" style="background-image:url('<?php echo $photo; ?>')"></div>
+        <div class="name"><?php echo $name; ?></div>
+        <div class="company"><nobr><?php echo $position; ?></nobr><br/><nobr><?php echo $company; ?></nobr></div>
+        <div class="testimony"><?php echo $testimony; ?></div>
       </div>
+      <?php } 
+      };
+      ?>
 
-      <?php endwhile; wp_reset_query(); ?>
-    </div>
-
-
-
-
+    </div>    
 
 
+        <?php endwhile; ?>
+    <?php endif; ?>   
 
-    
+
   </div>
 </section>

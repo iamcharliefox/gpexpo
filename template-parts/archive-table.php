@@ -14,7 +14,7 @@
           array(
               'key' => 'end_date',
               'value' => $today,
-              'compare' => '>=',
+              'compare' => '<',
               'type'      => 'DATE',
           )                   
         )
@@ -25,23 +25,15 @@
 <!-- UPCOMING GRID -->
 <section class="upcoming">
   <div class="container">
-    <div class="filter-bar">
-      <div class="upcoming-filter">
-        <a class="active" data-filter="event-row">All</a>
-        <a data-filter="inperson">Tradeshows</a>
-        <a data-filter="online">Online Events</a>
-      </div>
-      <div class="archive">
-        <a href="./archive">View Archive</a>
-      </div>
-    </div>
+
 
     
 
     <div class="upcoming-table">
     <hr>
-    <?php while ( $loop_upcoming->have_posts() ) : $loop_upcoming->the_post(); ?>
-   
+
+    <?php if ( $loop_upcoming->have_posts() ): while ( $loop_upcoming->have_posts() ): ?>
+   <?php $loop_upcoming->the_post(); ?>
     <?php
     $start_date = DateTime::createFromFormat('F j, Y', get_field("start_date"));
     $end_date = DateTime::createFromFormat('F j, Y', get_field("end_date"));
@@ -99,30 +91,21 @@
       </div>
 
   
+     <?php endwhile; ?>
+    <?php else : ?>
+            <div class="errorbox">
 
 
-    <?php endwhile; wp_reset_query(); ?>
+                There are currently no archived events.
+                <a href="<?php echo site_url(); ?>/events">View upcoming events</a>
+
+            </div>
+        <!-- Display "Posts not found" message here -->
+    <?php endif; ?>
+
     </div>
 
 
-
-
-    <!-- get COVID-19 updates from options page -->
-    <?php if( have_rows('upcoming_grid_group', 'option') ): ?>
-        <?php while( have_rows('upcoming_grid_group', 'option') ): the_row(); ?>
-          <?php if( get_sub_field('covid-19_notice') ): ?>
-            <div class="infobox">
-              <div class="icon">
-                <img src="<?php echo get_template_directory_uri() . '/assets/images/exclamation-circle-solid.svg' ?>" alt="">
-              </div>
-              <div class="info">
-                <div class="title">COVID-19 Updates</div>
-                <?php the_sub_field('covid-19_notice'); ?>
-              </div>
-            </div>
-          <?php endif; ?>
-        <?php endwhile; ?>
-    <?php endif; ?>  
 
 
   </div>

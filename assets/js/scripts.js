@@ -12,8 +12,40 @@ $(document).ready(function(){
     fade: true,
     dots: true,
     lazyLoad: 'ondemand',
-    speed: 1200
+    speed: 1200,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          arrows: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          arrows: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: true,
+          dots: true
+        }
+      } ,
+      {
+        breakpoint: 576,
+        settings: {
+          arrows: false,
+          dots: false
+        }
+      }     
+
+    ]      
   });
+  $('.hero-slide-container').fadeIn();
 
 
   // On before slide change
@@ -32,21 +64,63 @@ $('.hero-slide-container').on('beforeChange', function(event, slick, currentSlid
     autoplaySpeed: 6000,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 1    
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          arrows: false
+        }
+      } 
+    ]      
   });  
 
 
     $('.product-carousel').slick({
     autoplay: true,
-    autoplaySpeed: 0,
+    autoplaySpeed: 2500,
     infinite: true,
     slidesToShow: 5,
     slidesToScroll: 1,
-    centerMode: true,
+    // centerMode: true,
     arrows: false,
     pauseOnHover: false,
-    speed: 1000
+    speed: 1000,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        }
+      } 
+    ]  
   });  
+  $('.product-carousel').fadeIn();
 
       $('.adv-slider').slick({
     autoplay: true,
@@ -101,6 +175,25 @@ function loadFaq() {
 if ($("body").hasClass("page-faq")) {
   loadFaq();
 }
+
+
+$('.drawer-title').on('click', function() {
+  $(this).parent().find('.drawer-content').toggle();
+});
+
+
+$('.upcoming-filter a').on('click', function() {
+  var myFilter = "." + $(this).data("filter");
+  console.log(myFilter);
+  // $(".event-row").filter(myFilter).hide(); 
+  $('.upcoming-filter a').removeClass('active');
+  $(this).addClass('active');
+   $('.event-row').hide();
+    $(myFilter).fadeIn(300);
+});
+
+
+
 
 
 });

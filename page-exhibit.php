@@ -13,11 +13,18 @@ endif;
 
 ?>
 
-<section class="exhibit-hero" style="background-image:url('<?php echo $image; ?>')">
-	<div class="overlay">
-		<img src="<?php echo get_template_directory_uri() . '/assets/images/exhibit-hero-ph.png' ?>" alt="">
-	</div>
-</section>
+<div class="gpx-hero exhibitor">
+  <div class="hero-slide-container-exhibitor">
+
+<div class="hero-slidex" style="background-image:url('<?php echo get_template_directory_uri() . '/assets/images/topo-new.svg' ?>')">
+
+  <div class="hero-slide-inner">
+    <img src="<?php echo get_template_directory_uri() . '/assets/images/nbm-gpx.svg' ?>" alt="" style="max-width:80%">
+  </div>
+</div>
+
+  </div>
+</div>
 
 <section class="exhibit-intro">
 	<div class="container">
@@ -63,64 +70,8 @@ endif;
 </section>
 
 
+<?php include 'template-parts/upcoming-grid-exhibitors.php'; ?>
 
-<section class="exhibit-upcoming">
-	  <div class="container">
-		<h3>Upcoming <span>Events</span></h3>
-		
-	
-	
-	
-		<?php
-
-$today = current_time('Y-m-d');
-  $start_date = get_sub_field("start_date");
-  $end_date = get_sub_field("end_date");
-
-		$upcoming_loop = new WP_Query( array(
-    'post_type' => 'Events',
-    'posts_per_page' => '-1',
-    'meta_key' => 'start_date',
-      'orderby' => 'meta_value',
-      'order' => 'ASC',
-      'meta_query' => array(
-          array(
-              'key' => 'end_date',
-              'value' => $today,
-              'compare' => '>=',
-              'type'      => 'DATE',
-          )                   
-        )
-		  )
-		);
-		?>
-	
-		<div>
-			<table cellspacing="0" cellpadding="0">
-				<tr>
-					<th>Date(s)</th>
-					<th>Event</th>
-
-				</tr>
-			<?php while ( $upcoming_loop->have_posts() ) : $upcoming_loop->the_post(); ?>
-		    	<tr>
-					<td class="date">
-						<?php 
-						$Date = get_field("start_date");
-						$date_range = get_field("event_duration");
-						$newDate = date('j', strtotime($Date. " + {$date_range} days"));
-						?>								
-						<?php the_field('start_date'); ?> - <?php echo $newDate; ?>	, 2021	
-					</td>					
-					<td class="event"><?php the_title(); ?></td>
-
-
-				</tr>
-			<?php endwhile; wp_reset_query(); ?>
-				</table>
-		</div>
-	  </div>
-	</section>
 
 
 
@@ -189,54 +140,19 @@ $today = current_time('Y-m-d');
 		  <?php endif; ?>	
 
 		</div>
+		
 	</div> 
  
 
 	</div>		
 		
-		
+		<?php include 'template-parts/testimonials-exhibitor.php'; ?>   
 	</div>
 	
 </section>
 
 
 
-
-
-<section class="testimonials">
-  <div class="container">
-	<h3>What our <span>Exhibitors</span> have to say</h3>
-
-	<?php
-	$testimonial_loop = new WP_Query( 
-    array(
-        'post_type' => 'Testimony',
-        'showposts' => -1,
-        'tax_query' => array(
-            array(
-                'taxonomy'  => 'types',
-                'terms'     =>'exhibitor',
-                'field'     => 'slug'
-            )
-        )
-      )
-	);
-	?>
-
-
-	<div class="testimonials-container">
-	  <?php while ( $testimonial_loop->have_posts() ) : $testimonial_loop->the_post(); ?>
-	  <div class="card">
-		<div class="photo" style="background-image:url('<?php the_post_thumbnail_url() ?>')"></div>
-		<div class="name"><?php the_title(); ?></div>
-		<div class="company">Position - Company Name</div>
-		<div class="testimony"><?php the_content(); ?></div>
-	  </div>
-
-	  <?php endwhile; wp_reset_query(); ?>
-	</div>
-  </div>
-</section>
 
 
 

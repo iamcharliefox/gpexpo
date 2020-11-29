@@ -4,31 +4,28 @@
 ?>
 
 
-<section class="hero" style="background-image:url('<?php the_post_thumbnail_url() ?>')">
+<div class="gpx-hero" style="background-image:url('<?php echo get_template_directory_uri() . '/assets/images/topo-new.svg' ?>')">
+    <div class="hero-inner">
+        <div class="container">
+            <div class="title <?php the_field('show_format')?>">
+                <h2><?php the_title(); ?></h2>
+                <?php if( get_field('page_subtitle') ): ?>
+                <h4><?php the_field('page_subtitle'); ?></h4>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
 
-</section>
 
-<section class="content">
-  <div class="container">
-
-  
-
-    <div id="tabs" class="tabs">
+<div class="gpx-wrapper">
+  <!-- MAIN -->
+  <div class="gpx-main">
+    <div class="intro">
+      <img src="assets/images/single-featured-image.jpg" alt="">
+    </div>
       <article>
-              <!-- post editor content -->
-          <?php
 
-
-
-            if( have_posts() ){
-              while( have_posts() ){ ?>
-                <?php the_post(); ?>
-                <h2 class="headline"><?php the_title(); ?></h2>
-                <hr>
-                <?php the_content(); ?>
-              <?php }
-            }
-          ?> 
 
         <div class="faq-container">
           <ul id="trigger">
@@ -78,23 +75,20 @@
         </div>  
 
       </article>
-    </div>
- 
-    <div class="sidebar">
 
-
-      <div class="sidebar-item" style="text-align:center">
-      <center>
-      <img src="<?php echo get_template_directory_uri() . '/assets/images/BB-PH.png' ?>" alt="" style="padding:24px">
-      </center>
-      </div>
-
-
-    </div>
-
-    <!-- <div class="ads">ads - Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nobis non labore exercitationem eligendi voluptates minima, sapiente eius, tempore molestias, ea adipisci voluptas! Deleniti atque, commodi natus iure rerum incidunt.</div> -->
   </div>
-</section>
+
+  <!-- SIDEBAR -->
+  <div class="gpx-sidebar cf">
+    <div class="sidebar-item" style="text-align:center">
+        <center>
+            <img src="<?php echo get_template_directory_uri() . '/assets/images/BB-PH.png'; ?>" alt="" style="padding:24px">
+        </center>
+    </div>   
+  </div>
+
+
+</div>
 
 
 

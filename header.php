@@ -12,7 +12,7 @@
 </head>
 <body <?php body_class(); ?>>
 
-<nav>
+<div class="gpx-nav">
   <div class="container">
     <div class="nav-inner">
       <div class="logo">
@@ -28,8 +28,8 @@
       <div class="links">
 
         <!-- top navigation START -->
-          
-        <?php
+        <div class="desktop-links">
+                  <?php
         if (is_tree(19)) {
           wp_nav_menu(
             array(
@@ -50,15 +50,18 @@
           );
         }
         
-        ?>          
-          
-        <?php
+        ?>         
+        </div> 
 
-        ?>
+        <div class="mobile-links">
+          <i class="fas fa-bars"></i>
+        </div> 
+ 
+        
         <!-- top navigation END -->
 
 
       </div>
     </div>
   </div>  
-</nav>
+</div>

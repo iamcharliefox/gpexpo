@@ -53,7 +53,7 @@ $show_code_name = esc_html( $show_code->name );
 
         <h3><?php the_title(); ?></h3>
 
-        <?php if (get_field('location_type') == "Convention Center") { ?>
+        <?php if (get_field('halls')) { ?>
            <div class="halls">HALLS: <?php the_field('halls'); ?></div>
         <?php }; ?>        
 
@@ -64,11 +64,11 @@ $show_code_name = esc_html( $show_code->name );
         <div class="website"><a href="<?php the_field('link'); ?>" target="_blank">Website</a></div>
 
         <?php if (get_field('location_type') == "Convention Center") { ?>
-           | <div class="parking"><a href="<?php the_field('parking_link'); ?>">Parking</a></div>
+           | <div class="parking"><a href="<?php the_field('parking_link'); ?>" target="_blank">Parking</a></div>
         <?php }; ?>
 
         <?php if (get_field('location_type') == "Hotel") { ?>
-            | <div class="reservations"><a href="<?php the_field('reservations_link'); ?>">Online Reservations</a></div>
+            | <div class="reservations"><a href="<?php the_field('reservations_link'); ?>" target="_blank">Online Reservations</a></div>
             <?php if( get_field('phone_number') ): ?><div class="phone">Phone: <?php the_field('phone_number'); ?></div><?php endif; ?>
            <?php if( get_field('discount_deadline') ): ?><div class="discount">Discount Deadline: <?php the_field('discount_deadline'); ?></div><?php endif; ?>
            <?php if( get_field('group_rate') ): ?><div class="group">Group Rate: $<?php the_field('group_rate'); ?></div><?php endif; ?>

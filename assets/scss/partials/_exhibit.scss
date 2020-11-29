@@ -1,0 +1,173 @@
+  section.exhibit-video {
+    padding: 0 0 30px;
+    .container {
+      max-width: 1000px;
+    }
+  }
+  
+  section.exhibit-intro {
+    text-align: center;
+    padding: 50px 0 30px;
+    .container {
+      max-width: 1000px;
+    }    
+  }
+
+
+  .cas-container {
+  display: grid;
+  grid-template-columns: repeat(10,1fr);
+  grid-gap: $gutter/2;
+  margin-bottom: $gutter/2;
+
+  .file {
+    border: 2px solid $gpx-green;
+    border-radius: $rad;
+    text-align: center;
+    
+    // padding: 10px;
+    // margin: auto;
+    a {
+      color: $gpx-green;
+      font-weight: bold;
+      display: block;
+      padding: 12px 0 8px;
+      transition: all .2s;
+      font-size: 16px;
+      i {
+        font-size: 40px;
+        display: block;
+      }
+
+      &:hover {
+        background-color: $gpx-green;
+        color: $gpx-white;
+      }
+    }
+  }
+}
+
+.files-container {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: $gutter/2;
+  margin-bottom: $gutter/2;
+  justify-content: flex-start;
+  align-content: center;
+
+  .file {
+    border: 2px solid $gpx-green;
+    border-radius: $rad;
+
+    // text-align: center;
+    
+    // padding: 10px;
+    // margin: auto;
+    a {
+      color: $gpx-green;
+      font-weight: bold;
+      display: block;
+      padding: 10px;
+      transition: all .2s;
+      font-size: 16px;
+      display: grid;
+      grid-template-columns: 40px auto;
+      align-items: center;
+
+      > div {
+        font-weight: bold;;
+      }
+
+      i {
+        font-size: 40px;
+        display: inline-block;
+      }
+
+      &:hover {
+        background-color: $gpx-green;
+        color: $gpx-white;
+      }
+    }
+  }
+}
+
+.exhibitor-tabs {
+  margin-top: $gutter;
+  margin-bottom: 100px;
+
+  .resp-tab-active {
+    border-bottom: 5px solid $gpx-green !important; 
+  }
+}
+
+
+.page-exhibitor-services {
+  .gpx-wrapper {
+    background-color: $gpx-white;
+    padding: $gutter;
+    border-radius: $rad;
+  }
+
+  .gpx-drawer {
+    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd;
+    border-radius: $rad;
+    // padding: $gutter/2;
+    margin-bottom: $gutter;
+
+      &:first-of-type{
+        .drawer-content {
+          display: block;
+        }
+      }    
+
+    .drawer-title {
+      h4 {
+        line-height: 1;
+        margin: 0;
+        padding: $gutter/2;
+        cursor: pointer;
+        background-color: $gpx-green;
+        color: $gpx-white;
+      }
+    }
+    .drawer-content {
+      display: none;
+      padding-bottom: none;
+      padding: $gutter/2;
+
+      p {
+        // margin: $gutter/2 0 0;
+        padding: 0;
+        margin: 0;
+      }
+
+
+    }    
+  }
+
+  .button {
+    &.green {
+      border: none;
+      color: $gpx-green;
+      margin: 10px 10px 0 0;
+      padding: 0;
+      line-height: 1;
+      height: auto;
+    }
+  }
+
+
+
+
+}
+
+.page-exhibitor-services, .page-exhibit {
+  .gpx-footer {
+    background-color: $gpx-green;
+
+    .footer-nav {
+      background-color: darken($gpx-green,10%);
+    }
+  }
+}

@@ -1,0 +1,110 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+strong {
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+}
+
+
+hr {
+  border-bottom: 1px solid #eee;
+  margin: 10px 0;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin: 0 0 0.5em;
+    padding: 0;
+    line-height: 1.1;
+  }
+
+  a {
+    color: $gpx-blue;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+
+  h3 {
+    font-size: 28px;
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+
+    h5 {
+    font-size: 20px;
+  }
+
+    h6 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 15px;
+    margin-bottom: 1em;
+    line-height: 1.4em;
+  }
+
+  .alignleft {
+    float: left;
+  }
+
+  .alignright {
+    float: right;
+  }
+
+  .aligncenter {
+    margin: auto;
+  }
+  .wp-caption-text {
+    font-size: 12px;
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  ul {
+    margin: 0 0 $gutter/2 0;
+
+    li {
+      list-style:circle;
+      margin: 0 0 0 20px;
+      padding: 3px 0;
+      &::marker {
+        color: $gpx-blue;
+        font-weight: bold;
+
+      }
+    } 
+
+  }
+  
+
+h3 {
+  span {
+    color: $gpx-green;
+    font-weight: inherit;
+  }
+}
+
+nobr {
+  font-weight: inherit;
+}

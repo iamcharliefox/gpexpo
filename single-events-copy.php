@@ -1,28 +1,19 @@
 <?php get_header(); ?>
 
-
-<?php
-$showformat = get_field_object('show_format');
-$showformatvalue = $showformat['value'];
-$showformatlabel = $showformat['choices'][ $showformatvalue ];
-?>
 <!-- HERO START -->
-<div class="gpx-hero" style="background-image:url('<?php the_post_thumbnail_url(); ?>')">
+<section class="hero" style="background-image:url('<?php the_post_thumbnail_url(); ?>')">
     <div class="hero-inner">
         <div class="container">
 
-            <?php if ($showformatvalue == 'online') { ?>
+            <?php if (get_field('show_format') == 'Online') { ?>
               <!-- <div class="format">
                 Online Event
               </div> -->
               <img src="<?php echo get_template_directory_uri() . '/assets/images/breakaway.svg' ?>" alt="" class="breakaway-logo-small">
             <?php }; ?>
               
-            <div class="title <?php echo $showformatvalue; ?>">
+            <div class="title">
                 <h2><?php the_title(); ?></h2>
-                <?php if( get_field('page_subtitle') ): ?>
-                <h4><?php the_field('page_subtitle'); ?></h4>
-                <?php endif; ?>
             </div>
 
             <?php if( get_field('featuring') ): ?>
@@ -54,9 +45,9 @@ $showformatlabel = $showformat['choices'][ $showformatvalue ];
             $start_date = DateTime::createFromFormat('F j, Y', get_field("start_date"));
             $end_date = DateTime::createFromFormat('F j, Y', get_field("end_date"));
             if ($start_date != $end_date) { 
-              echo $start_date->format( 'F' ) . " " . $start_date->format( 'j' ) . "-" . $end_date->format( 'j' ) . ", " . $start_date->format( 'Y' ); 
+              echo $start_date->format( 'F' ) . " " . ordinal($start_date->format( 'j' )) . " - " . ordinal($end_date->format( 'j' )) . ", " . $start_date->format( 'Y' ); 
             } else { 
-              echo $start_date->format( 'F' ) . " " . $start_date->format( 'j' ) . ", " . $start_date->format( 'Y' ); 
+              echo $start_date->format( 'F' ) . " " . ordinal($start_date->format( 'j' )) . ", " . $start_date->format( 'Y' ); 
             }; ?>
 
 								
@@ -64,12 +55,14 @@ $showformatlabel = $showformat['choices'][ $showformatvalue ];
             </div>
         </div>
     </div>
-</div>
+</section>
 <!-- HERO END -->
 
-<div class="gpx-wrapper">
-  <!-- MAIN -->
-  <div class="gpx-main">
+
+<!-- MAIN CONTENT START -->
+<section class="content">
+    <div class="container">
+			
 				<!-- INTRO START -->
         <div class="intro">
 
@@ -106,12 +99,6 @@ $showformatlabel = $showformat['choices'][ $showformatvalue ];
           
 
 
-
-        </div>
-				<!-- INTRO END -->
-
-
-
           <article>
             <!-- post editor content -->
             <?php if (have_posts()) {
@@ -125,12 +112,65 @@ $showformatlabel = $showformat['choices'][ $showformatvalue ];
 			        }
 				    } ?>
           </article>
+        </div>
+				<!-- INTRO END -->
+				
+				<!-- TABS START -->
+        <div class="tabs">
+          <div id="tab">
+						
+            <!-- GENERATE TABS -->
+            <ul class="resp-tabs-list">
+              <?php
+					    if (have_rows('tabs')):
+					      while (have_rows('tabs')):
+					        the_row();
+					        $tab_title = get_sub_field('tab_title_text');
+					        echo "<li id='". $tab_title ."'>" . $tab_title . "</li>";
+					      endwhile;
+							endif; ?>
+            </ul>
 
-  </div>
-
-  <!-- SIDEBAR -->
-  <div class="gpx-sidebar cf">
-
+	          <!-- TAB CONTENT -->
+	          <div class="resp-tabs-container">
+              <?php if (have_rows('tabs')): ?>
+                <?php while (have_rows('tabs')):
+						      the_row(); ?>
+                  <div>
+                    <?php 
+										while (has_sub_field("tab_content")):
+					            if (get_row_layout() == "wysiwyg_layout"):
+					              $wysiwyg = get_sub_field('wysiwyg');
+					              include 'template-parts/wysiwyg.php';
+					            elseif (get_row_layout() == "title_sponsors_layout"):
+					              include 'template-parts/title-sponsors.php';
+					            elseif (get_row_layout() == "presenting_sponsors_layout"):
+					              include 'template-parts/presenting-sponsors.php';
+											elseif (get_row_layout() == "featured_exhibitors_layout"):
+												include 'template-parts/featured-exhibitors.php';	
+					            elseif (get_row_layout() == "training"):
+					              include 'template-parts/training3.php';
+											elseif (get_row_layout() == "schedule"):
+												include 'template-parts/schedule3.php';												
+											elseif (get_row_layout() == "specials"):
+												include 'template-parts/specials.php';	     
+											elseif (get_row_layout() == "travel"):
+												include 'template-parts/travel.php';	                                            											
+											elseif (get_row_layout() == "exhibitor_list"):
+												include 'template-parts/exh-list.php';	                        
+					            endif;
+					          endwhile; 
+										?>
+                  </div>
+                <?php endwhile; ?>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+				<!-- TABS END -->
+				
+				<!-- SIDEBAR START -->
+        <div class="sidebar">
           <!-- TITLE SPONSORS, PRESENTING SPONSORS AND FEATURED EXHIBITORS : START -->					
 					<?php if (have_rows('tabs')): ?>
 					<?php while (have_rows('tabs')):
@@ -305,7 +345,7 @@ $showformatlabel = $showformat['choices'][ $showformatvalue ];
             </div>
 
 
-                
+                <?php include 'template-parts/event-videos.php'; ?>
            
 
             <div class="sidebar-item" style="text-align:center">
@@ -314,71 +354,18 @@ $showformatlabel = $showformat['choices'][ $showformatvalue ];
                 </center>
             </div>
 
-            <?php include 'template-parts/event-videos.php'; ?>
 
-  </div>
-
-  <!-- TABS -->
-  <div class="gpx-tabs">
-				<!-- TABS START -->
-        <div class="tabs">
-          <div id="tab">
-						
-            <!-- GENERATE TABS -->
-            <ul class="resp-tabs-list">
-              <?php
-					    if (have_rows('tabs')):
-					      while (have_rows('tabs')):
-					        the_row();
-					        $tab_title = get_sub_field('tab_title_text');
-					        echo "<li id='". $tab_title ."'>" . $tab_title . "</li>";
-					      endwhile;
-							endif; ?>
-            </ul>
-
-	          <!-- TAB CONTENT -->
-	          <div class="resp-tabs-container">
-              <?php if (have_rows('tabs')): ?>
-                <?php while (have_rows('tabs')):
-						      the_row(); ?>
-                  <div>
-                    <?php 
-										while (has_sub_field("tab_content")):
-					            if (get_row_layout() == "wysiwyg_layout"):
-					              $wysiwyg = get_sub_field('wysiwyg');
-					              include 'template-parts/wysiwyg.php';
-					            elseif (get_row_layout() == "title_sponsors_layout"):
-					              include 'template-parts/title-sponsors.php';
-					            elseif (get_row_layout() == "presenting_sponsors_layout"):
-					              include 'template-parts/presenting-sponsors.php';
-											elseif (get_row_layout() == "featured_exhibitors_layout"):
-												include 'template-parts/featured-exhibitors.php';	
-					            elseif (get_row_layout() == "training"):
-					              include 'template-parts/training4.php';
-											elseif (get_row_layout() == "schedule"):
-												include 'template-parts/schedule4.php';												
-											elseif (get_row_layout() == "specials"):
-												include 'template-parts/specials.php';	     
-											elseif (get_row_layout() == "travel"):
-												include 'template-parts/travel.php';	                                            											
-											elseif (get_row_layout() == "exhibitor_list"):
-												include 'template-parts/exh-list.php';	                        
-					            endif;
-					          endwhile; 
-										?>
-                  </div>
-                <?php endwhile; ?>
-              <?php endif; ?>
-            </div>
-          </div>
         </div>
-				<!-- TABS END -->
-  </div>  
 
+        <!-- <div class="ads">ads - Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nobis non labore exercitationem eligendi voluptates minima, sapiente eius, tempore molestias, ea adipisci voluptas! Deleniti atque, commodi natus iure rerum incidunt.</div> -->
+    </div>
+</section>
+<!-- MAIN CONTENT END -->
 
-</div>
 
 
 
 
 <?php get_footer(); ?>
+
+

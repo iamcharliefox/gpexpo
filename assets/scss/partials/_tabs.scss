@@ -1,0 +1,361 @@
+.gpx-tabs {
+  width: 100%;
+  min-height: 300px;
+  border-radius: $rad;
+  overflow: hidden;  
+  @include xl {
+    width: calc(100% - #{$sidebar-width} - #{$gutter});
+  }    
+
+  &.full-width {
+    width: 100%;
+  }
+}
+
+
+    .tabs {
+      // grid-column: span 2;
+      // order: 2;
+      // grid-area: tabs;
+      background-color: $gpx-white;
+      align-self: start;
+
+      h2 {
+        font-size: 24px;
+        line-height: 1.5em;
+      }
+
+      h3 {
+        font-size: 18px;
+        line-height: 1.5em;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }      
+    }
+
+    .tab-section {
+      padding: 0 0 $gutter*1.5;
+      font-size: 16px;
+
+      p {
+        font-size: inherit;
+      }
+
+      ul {
+        columns: 3;
+        // color: $gpx-blue;
+        // margin: 0 0 0 20px;
+        margin: 0 0 $gutter/2 0;
+        // color: blue;
+
+        &.single-col {
+          columns: 1;
+        }
+
+        &.double-col {
+          columns: 2;
+        }
+
+        li {
+          list-style:circle;
+          margin: 0 0 0 20px;
+          padding: 3px 0;
+          // color: red;
+          &::marker {
+            color: $gpx-blue;
+            font-weight: bold;
+
+          }
+          a {
+            color: $gpx-black;
+
+            &:hover {
+              color: $gpx-blue;
+              text-decoration: underline;
+            }
+          }
+        } 
+
+      }
+
+      .wysiwyg-content {
+        ul {
+          columns: 3;
+        }
+      }
+     
+    }
+
+
+    .sponsor-grid-large {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: $gutter/2;
+
+      > div {
+        // background-color: #f5f5f5;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        padding: $gutter;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        // min-height: 100px;
+      }
+
+      a {
+        width: 100%;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .sponsor-grid-small {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: $gutter/2;      
+      > div {
+        // background-color: #f5f5f5;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        padding: $gutter/2;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        // min-height: 100px;
+      }      
+      a {
+        width: 100%;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }    
+    }
+
+        .resp-tabs-list {
+      display: grid;
+      grid-template-columns: repeat( auto-fit, minmax(50px, 1fr) );
+      background-color: #fafafa;
+      // justify-content: center;
+      // justify-items: center;
+
+    }
+
+    .resp-tabs-list li {
+      margin: 0 !important;
+      line-height: 50px;
+      border-right: 1px solid #eee !important;
+      padding: 13px $gutter !important;
+      text-align: center;
+    }
+
+    .resp-tabs-container {
+      border-color: #ffffff !important;
+    }
+
+    .resp-tab-content {
+      border: none;
+      border-top: 1px solid #eee;
+      font-size: 14px;
+      line-height: 1.5em;
+      padding: $gutter $gutter $gutter*2;
+    }
+
+    .resp-tab-item {
+      background-color: #fafafa !important;
+    }
+
+    .resp-tab-active{
+      background-color: #fff !important;
+    }
+
+    .training-row {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 2fr 1fr 1fr 4fr;
+    // grid-auto-columns: min-content;
+    // grid-auto-columns: max-content;
+    // grid-auto-columns: minmax(10px, auto);
+    // grid-auto-columns: fit-content(400px);
+
+    &.head > div {
+      font-weight: bold;
+
+    }
+
+
+    .training-details {
+      a {
+        font-weight: 600;
+        color: $gpx-blue;
+      }
+    }
+  }
+
+    .schedule-row {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 2fr 4fr;
+    // grid-auto-columns: min-content;
+    // grid-auto-columns: max-content;
+    // grid-auto-columns: minmax(10px, auto);
+    // grid-auto-columns: fit-content(400px);
+
+    &.head > div {
+      font-weight: bold;
+    }
+
+
+    .schedule-details {
+      a {
+        font-weight: 600;
+        color: $gpx-blue;
+      }
+    }
+  }
+
+  .specials-container {
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-gap: $gutter;
+  padding-top: $gutter;
+
+  h3 {
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  p {
+    margin: $gutter/3 0;
+  }
+
+  a {
+    color: $gpx-blue;
+    font-weight: 600;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .company {
+    font-weight: 600;
+  }
+
+  .thumb {
+    .inner {
+      width: 200px;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 5px;
+    }
+  }
+}
+
+
+.travel-container {
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-gap: $gutter;
+  padding-top: $gutter;
+
+
+  h3 {
+    font-weight: 600;
+    margin-bottom: 0 !important;
+    // margin-top: 0;
+    line-height: 1.1em;
+  }
+
+  p {
+    margin: $gutter/3 0;
+  }
+
+  a {
+    color: $gpx-blue;
+    font-weight: 600;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .address {
+    margin-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  .website {
+    display: inline-block;
+  }
+
+  .parking {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+    .reservations {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  .halls {
+    font-weight: bold;
+  }
+
+  .hotel {
+    background-color: $gpx-green;
+    color: $gpx-white;
+    display: inline-block;
+    padding: 0 13px;
+    line-height: 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .convention {
+    background-color: $gpx-blue;
+    color: $gpx-white;
+    display: inline-block;
+    padding: 0 13px;
+    line-height: 24px;
+    border-radius: $rad;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .thumb {
+    .inner {
+      width: 200px;
+      min-height: 250px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 5px;
+    }
+  }
+}
+
+
+
+.videos-container {
+  .video {
+    margin-top: $gutter;
+  }
+  .caption {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+}
+
+    .resp-tab-active {
+      border: none !important;
+      border-bottom: 5px solid $gpx-blue !important;
+      border-right: 1px solid #eee !important;
+    } 

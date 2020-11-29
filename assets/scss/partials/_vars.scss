@@ -1,0 +1,24 @@
+$gpx-blue: #0A5AA8;
+$gpx-black: #222;
+$gpx-green: #789C3D;
+$gpx-red: #AB4825;
+$gpx-white: #fff;
+
+$gpx-width: 1320px;
+$nav-height: 100px;
+$gutter: 24px;
+$sidebar-width: calc((#{$gutter} * 2) + 300px );
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+$rad: 3px;

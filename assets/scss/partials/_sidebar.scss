@@ -1,0 +1,101 @@
+.gpx-sidebar {
+    width: 100%;
+    float: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: $gutter;
+
+  @include sm {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include xl {
+    width: $sidebar-width;
+    // min-height: 1000px;
+    // background-color: rgba(darkolivegreen,0.5);
+    float: right;
+    grid-template-columns: 1fr;
+  }
+
+
+
+
+      .sidebar-item {
+        background-color: $gpx-white;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: $gutter;
+        // padding: $gutter;
+
+        .item {
+          display: grid;
+          grid-template-columns: 40px auto;
+          grid-gap: $gutter/3;
+          grid-template-rows: minmax(44px, auto);
+          align-items: flex-start;
+          margin-top: $gutter/2;
+          border-bottom: 1px solid #eee;
+          padding-bottom: $gutter/2;
+        }
+
+        .icon {
+          color: $gpx-blue;
+
+          i {
+            font-size: 30px;
+          }
+        }
+
+        .details {
+          align-self: center;
+
+          a {
+            color: $gpx-blue;
+            font-weight: 600;
+          }
+        }
+
+        .label {
+          font-size: 13px;
+          font-weight: 700;
+          text-transform: uppercase;
+          margin-bottom: 2px;
+        }
+        .desc {
+          font-size: 13px;
+          font-weight: 400;
+        }
+
+        .button-group {
+          padding: $gutter/2 0 0;
+        }
+
+        a.button {
+          width: 100%;
+          margin: $gutter/2 0 0;
+        }
+      }
+
+      .title {
+        padding: $gutter;
+        border-bottom: 1px solid #eee;
+      }
+
+      .inner {
+        padding: 0 $gutter $gutter;
+
+        ul {
+          margin: 0;
+          padding: 0;
+        }
+        li {
+          padding: $gutter 0 0;
+        }
+      }
+
+  ul, li {
+    margin: 0;
+    list-style: none;
+  }
+
+}
